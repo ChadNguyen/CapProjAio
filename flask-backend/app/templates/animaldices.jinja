@@ -1,0 +1,24 @@
+{% extends "base.jinja" %}
+
+{% block content %}
+    <h1>Animal Dices</h1>
+    <p>The result is: <span id="result">{{ result_str }}</span></p>
+    <button id="roll-button" class="btn btn-primary">Roll the Dice</button>
+
+    <script>
+        const rollButton = document.getElementById('roll-button');
+        const resultSpan = document.getElementById('result');
+
+        rollButton.addEventListener('click', () => {
+            fetch('{{ url_for("main.roll_dice") }}')  // add this line to trigger the dice roll
+                .then(response => response.json())
+                .then(data => {
+                    resultSpan.textContent = data.result_str;
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        });
+    </script>
+{% endblock %}
+
